@@ -1,0 +1,30 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+
+# Env & secrets
+.env
+
+# Virtual env
+data/
+music/
+venv/
+.venv/
+
+# Notebooks
+notebook/
+.ipynb_checkpoints/
+
+# Temp files
+temp/
+*.log
+
+# OS junk
+.DS_Store
+Thumbs.db
+
+# Models (если большие)
+*.bin
+*.pt
+*.safetensors

@@ -1,0 +1,15 @@
+aiogram==3.22.0
+aiofiles
+python-dotenv
+
+requests
+beautifulsoup4
+
+transformers
+tokenizers
+safetensors
+
+openai-whisper
+ffmpeg-python
+
+numpy

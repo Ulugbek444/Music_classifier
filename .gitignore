@@ -1,0 +1,38 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+
+# Environments
+venv/
+.venv/
+
+# Virtual env
+data/
+ML_API/models
+notebook/small_data/pro-ed_data
+notebook/small_data/processed_data
+music/
+
+
+# Secrets
+.env
+.env.*
+
+# Runtime
+temp/
+logs/
+
+# IDE
+.vscode/
+.idea/
+
+# Docker
+*.log
+*.pid
+*.sock
+.dockerignore.bak
+
+# HuggingFace / Transformers cache
+.cache/
+.huggingface/
