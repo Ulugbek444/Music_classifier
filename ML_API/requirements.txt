@@ -1,8 +1,5 @@
-# API
 fastapi
 uvicorn
 python-multipart
-
-# ML (БЕЗ torch!)
 transformers
 openai-whisper
