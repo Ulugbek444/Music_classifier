@@ -12,7 +12,7 @@ RUN pip install --upgrade pip
 # СТАВЛЮ CPU TORCH ПЕРВЫМ И БЕЗ ЗАВИСИМОСТЕЙ
 RUN pip install --no-cache-dir torch --extra-index-url https://download.pytorch.org/whl/cpu
 
-COPY requirements.txt .
+COPY ML_API/requirements.txt ./requirements.txt
 
 # Остальные пакеты НЕ смогут подтянуть CUDA
 RUN pip install \
@@ -21,7 +21,7 @@ RUN pip install \
     --retries 10 \
     -r requirements.txt
 
-COPY . .
+COPY ML_API/ .
 
 ENV PYTHONUNBUFFERED=1
 
