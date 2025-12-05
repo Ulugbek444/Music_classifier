@@ -2,7 +2,6 @@ import whisper
 import torch
 import tempfile
 import os
-import unicorn
 from pathlib import Path
 
 from typing import Optional
@@ -97,3 +96,14 @@ def predict_emotion(data: TextInput):
 @app.get("/health")
 def health():
     return {"status": "ok"}
+
+
+if __name__ == "__main__":
+    import uvicorn
+    uvicorn.run(
+        app,
+        host="0.0.0.0",
+        port=8000,
+        log_level="info"
+    )
+
