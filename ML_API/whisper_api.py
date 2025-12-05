@@ -2,6 +2,7 @@ import whisper
 import torch
 import tempfile
 import os
+import unicorn
 from pathlib import Path
 
 from typing import Optional
