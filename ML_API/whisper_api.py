@@ -18,8 +18,7 @@ app = FastAPI(title="ML API")
 whisper_model = None
 
 # === Emotion model ===
-tokenizer: Optional[PreTrainedTokenizer] = None
-emotion_model: Optional[PreTrainedModel] = None
+HF_MODEL_ID = "Ulugbek444/Music_classifier"
 
 
 @app.on_event("startup")
@@ -30,12 +29,8 @@ def load_model():
     whisper_model = whisper.load_model("small")
     print("✅ Whisper model loaded")
 
-    # ===== Emotion =====
-    BASE_DIR = Path(__file__).resolve().parent
-    MODEL_PATH = BASE_DIR / "models" / "lyrics_emotion_bert"
-
-    tokenizer = AutoTokenizer.from_pretrained(MODEL_PATH)
-    emotion_model = AutoModelForSequenceClassification.from_pretrained(MODEL_PATH)
+    tokenizer = AutoTokenizer.from_pretrained(HF_MODEL_ID)
+    emotion_model = AutoModelForSequenceClassification.from_pretrained(HF_MODEL_ID)
     emotion_model.eval()
 
     print("✅ Emotion model loaded")

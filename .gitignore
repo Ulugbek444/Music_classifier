@@ -9,7 +9,7 @@ venv/
 
 # Virtual env
 data/
-ML_API/models
+hf_model/
 notebook/small_data/pro-ed_data
 notebook/small_data/processed_data
 music/
