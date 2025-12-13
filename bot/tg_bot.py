@@ -100,10 +100,10 @@ async def handle_voice(message: Message, bot: Bot):
     if analysis_count[user_id] == 2 and user_id not in creator_shown:
         creator_shown.add(user_id)
 
-        # ✅ ПАУЗА
+        # ПАУЗА
         await asyncio.sleep(5)
 
-        # ✅ ПОТОМ стикер
+        # ПОТОМ стикер
         await send_creator_sticker(message)
 
 
@@ -158,20 +158,19 @@ async def handle_text(message: types.Message):
     if analysis_count[user_id] == 2 and user_id not in creator_shown:
         creator_shown.add(user_id)
 
-        # ✅ ПАУЗА
+        # ПАУЗА
         await asyncio.sleep(5)
 
-        # ✅ ПОТОМ стикер
+        # ПОТОМ стикер
         await send_creator_sticker(message)
 
 
 @router.callback_query()
 async def handle_creator_buttons(callback: CallbackQuery):
 
-    # ✅ 1. СРАЗУ убираем кнопки
     await callback.message.edit_reply_markup(reply_markup=None)
 
-    # ✅ 2. Реакция
+    # Реакции
     if callback.data == "creator_like":
         await callback.message.answer_sticker(
             "CAACAgQAAxkBAAOAaSx2pgjit-wl8DtEhIOfOWh9e5UAAsUiAAK9t3FTihX9KRsEOAI2BA"
@@ -184,5 +183,4 @@ async def handle_creator_buttons(callback: CallbackQuery):
         )
         await callback.message.answer("Я тебя запомнил… 😈")
 
-    # ✅ 3. Закрываем callback (обязательно)
     await callback.answer()

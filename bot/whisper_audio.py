@@ -5,9 +5,6 @@ ML_API_BASE = os.getenv("ML_API_BASE", "http://localhost:8000")
 WHISPER_API_URL = f"{ML_API_BASE}/transcribe"
 
 
-# локально / docker-compose
-# в облаке → https://your-whisper-api.up.railway.app/transcribe
-
 print("Whisper URL:", WHISPER_API_URL)
 
 

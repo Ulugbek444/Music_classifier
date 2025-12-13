@@ -29,13 +29,12 @@ def load_model():
     whisper_model = whisper.load_model("small")
     print("✅ Whisper model loaded")
 
+    # === Emotion model ===
     tokenizer = AutoTokenizer.from_pretrained(HF_MODEL_ID)
     emotion_model = AutoModelForSequenceClassification.from_pretrained(HF_MODEL_ID)
     emotion_model.eval()
 
     print("✅ Emotion model loaded")
-    print("Tokenizer type:", type(tokenizer))
-    print("Emotion model type:", type(emotion_model))
 
 
 @app.post("/transcribe")
