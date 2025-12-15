@@ -21,6 +21,9 @@ async def transcribe_via_api(audio_path: str) -> str:
 
             async with session.post(WHISPER_API_URL, data=form, timeout=120) as resp:
                 if resp.status != 200:
-                    raise Exception(f"Whisper API error {resp.status}")
+                    error_text = await resp.text()
+                    raise RuntimeError(
+                        f"Emotion API error: {resp.status} | {error_text}"
+                    )
                 data = await resp.json()
                 return data["text"]

@@ -1,32 +1,28 @@
-import aiohttp
-import logging
-import os
 from genius_api.genius import search_song
-from genius_api.lyrics import fetch_lyrics_from_url
-
-ML_API_BASE = os.getenv("ML_API_BASE", "http://localhost:8000")
-EMOTION_API_URL = f"{ML_API_BASE}/predict-emotion"
 
 
 async def analyze_song(query: str):
     song = search_song(query)
     if not song:
-        return {"error": "Song not found"}
+        return {"error": "Song not found or lyrics unavailable"}
 
-    lyrics = fetch_lyrics_from_url(song["url"])
-    if not lyrics:
-        return {"error": "Lyrics not available"}
+    lyrics = song["lyrics"]
+
+    # обязательно ограничиваем длину
+    lyrics = lyrics[:800]
 
     try:
         async with aiohttp.ClientSession() as session:
             async with session.post(
                 EMOTION_API_URL,
                 json={"text": lyrics},
-                timeout=30
+                timeout=60
             ) as resp:
-
                 if resp.status != 200:
-                    raise RuntimeError("Emotion API error")
+                    error_text = await resp.text()
+                    raise RuntimeError(
+                        f"Emotion API error: {resp.status} | {error_text}"
+                    )
 
                 data = await resp.json()
 
@@ -40,8 +36,3 @@ async def analyze_song(query: str):
     except Exception:
         logging.exception("Emotion prediction failed")
         return {"error": "Prediction error"}
-
-
-# тест
-# result = analyze_song("Coldplay Fix You")
-# print(result)
