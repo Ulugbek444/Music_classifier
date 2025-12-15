@@ -1,4 +1,5 @@
 from genius_api.genius import search_song
+from genius_api.lyrics import fetch_lyrics
 
 
 async def analyze_song(query: str):
@@ -6,7 +7,9 @@ async def analyze_song(query: str):
     if not song:
         return {"error": "Song not found or lyrics unavailable"}
 
-    lyrics = song["lyrics"]
+    lyrics = fetch_lyrics(song["artist"], song["title"])
+    if not lyrics:
+        return {"error": "Lyrics not available"}
 
     # обязательно ограничиваем длину
     lyrics = lyrics[:800]
