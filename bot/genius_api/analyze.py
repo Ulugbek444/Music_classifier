@@ -1,5 +1,15 @@
+import logging
+import os
+
+import aiohttp
+
 from genius_api.genius import search_song
 from genius_api.lyrics import fetch_lyrics
+
+EMOTION_API_URL = os.getenv(
+    "EMOTION_API_URL",
+    "http://whisper-api:8000/predict-emotion",
+)
 
 
 async def analyze_song(query: str):
