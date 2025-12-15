@@ -1,31 +1,37 @@
+from dotenv import load_dotenv
 import os
-import logging
 import requests
-from typing import Optional
-import lyricsgenius
 
-logger = logging.getLogger(__name__)
+load_dotenv()
 
-genius = lyricsgenius.Genius(
-    os.environ["GENIUS_ACCESS_TOKEN"],
-    skip_non_songs=True,
-    excluded_terms=["(Remix)", "(Live)"],
-    remove_section_headers=True,
-    verbose=False,
-)
+GENIUS_TOKEN = os.getenv("GENIUS_TOKEN")
+GENIUS_API_URL = "https://api.genius.com/search"  # endpoint
+# print(GENIUS_TOKEN[:10])  # sanity check
 
 
-def search_song(query: str) -> Optional[dict[str, str]]:
-    try:
-        song = genius.search_song(query)
-    except Exception:
-        logger.warning("Genius search failed", exc_info=True)
+def search_song(query: str):
+    # авторизация
+    headers = {
+        "Authorization": f"Bearer {GENIUS_TOKEN}",
+        "User-Agent": "LyricsEmotionBot/1.0"
+    }
+
+    params = {
+        "q": query
+    }
+
+    response = requests.get(GENIUS_API_URL, headers=headers, params=params)  # get запрос
+    response.raise_for_status()  # кидает exception при ошибке
+
+    hits = response.json()["response"]["hits"]  # hits — список кандидатов, если ничего не нашли то None
+
+    if not hits:
         return None
 
-    if not song:
-        return None
+    song = hits[0]["result"]  # первый из кандидатов почти всегда нужный
 
     return {
-        "title": song.title,
-        "artist": song.artist,
+        "title": song["title"],
+        "artist": song["primary_artist"]["name"],
+        "url": song["url"]
     }
