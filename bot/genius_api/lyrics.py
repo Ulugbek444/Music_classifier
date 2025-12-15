@@ -17,9 +17,19 @@ def trim_to_lyrics(text: str):
 
 
 def fetch_lyrics_from_url(url: str):
-    headers = {"User-Agent": "LyricsEmotionBot/1.0"}
-    response = requests.get(url, headers=headers)
-    response.raise_for_status()
+    headers = {
+        "User-Agent": (
+            "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
+            "AppleWebKit/537.36 (KHTML, like Gecko) "
+            "Chrome/119.0.0.0 Safari/537.36"
+        )
+    }
+
+    try:
+        response = requests.get(url, headers=headers, timeout=15)
+        response.raise_for_status()
+    except requests.exceptions.RequestException:
+        return None
 
     soup = BeautifulSoup(response.text, "html.parser")
     lyrics_containers = soup.select('div[data-lyrics-container="true"]')
